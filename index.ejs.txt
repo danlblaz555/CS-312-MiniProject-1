@@ -1,0 +1,46 @@
+<%- include('partials/header') %>
+</head>
+<h1>Welcome to <%= title %>!</h1>
+<p>This is a simple Node.js and Express app using EJS.</p>
+<h1>Create a New Blog Post</h1>
+</head>
+<body>
+<form action="/posts" method="POST">
+    <label for="name">Your Name:</label>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="title">Blog Title:</label>
+    <input type="text" id="title" name="title" required><br><br>
+
+    <label for="content">Blog Content:</label>
+    <textarea id="content" name="content" rows="5" required></textarea><br><br>
+
+    <button type="submit">Submit</button>
+</form>
+
+<hr>
+
+<h2>Blog Posts</h2>
+<% if (posts.length === 0) { %>
+    <p>No blog posts yet!</p>
+<% } else { %>
+    <ul>
+        <% posts.forEach(function(post, index) { %>
+            <li>
+                <h3><%= post.title %> (by <%= post.name %>)</h3>
+                <p><%= post.content %></p>
+                <p><small>Posted on <%= post.date %></small></p>
+
+                <!-- Edit and Delete Buttons -->
+                <form action="/posts/<%= index %>/delete" method="POST" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+
+                <a href="/posts/<%= index %>/edit">Edit</a>
+            </li>
+        <% }) %>
+    </ul>
+<% } %>
+
+</body>
+</html>
